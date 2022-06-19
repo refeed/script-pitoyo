@@ -1,0 +1,5 @@
+Module yang diperlukan :
+- pandas
+- openpyxl
+Jalankan program "script_copy_tabel_aws.py"
+'aws_sort_template_verifier.py' jangan dihapus
