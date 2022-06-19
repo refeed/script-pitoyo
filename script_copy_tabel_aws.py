@@ -37,7 +37,7 @@ def get_real_time_and_date(date, time):
     if time == 24.0:
         new_date = date + pandas.DateOffset(1)
         new_time = 0.0
-    
+
     if type(date) is not pandas._libs.tslibs.timestamps.Timestamp:
         new_date = None
     if type(time) is not float:
@@ -54,7 +54,7 @@ def get_and_copy_file_to_destination(date, time, copy=True):
     dir_source_path = os.path.join(SUMBER_SORTIR_PATH, '2018-{month}-{day}'.format(
                 month=('%.2d' % date.month),
                 day=('%.2d' % date.day)))
-    
+
     file_name_to_be_copied = '2018{month}{day}{hour}00'.format(
                 month=('%.2d' % date.month),
                 day=('%.2d' % date.day),
@@ -76,7 +76,7 @@ def get_and_copy_file_to_destination(date, time, copy=True):
 
     if copy:
         print('Copied ' + shutil.copy(path_to_be_copied, TUJUAN_COPY_PATH))
-    
+
     return path_to_be_copied
 
 
