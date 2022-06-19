@@ -94,35 +94,36 @@ if __name__ == "__main__":
     # For writing we use openpyxl, pandas' API is just very troublesome to use
     sumber_table_openpyxl_wb = openpyxl.load_workbook(filename=SUMBER_TABLE_PATH)
 
-    for arg_location in RAIN_TOTAL_LINE_LOCATION.keys():
-        # arg_location is ARG Jerowaru, etc
-        sumber_table_df = pandas.read_excel(SUMBER_TABLE_PATH, sheet_name=arg_location)
+    # FIXME: This only opens the first sheet as the reference
+    sumber_table_df = pandas.read_excel(SUMBER_TABLE_PATH)
 
-        for index, row in sumber_table_df.iterrows():
-            tanggal = (row[0] if type(row[0]) is not pandas._libs.tslibs.nattype.NaTType
-                else prev_tanggal)
-            waktu = row[1]
+    for index, row in sumber_table_df.iterrows():
+        tanggal = (row[0] if type(row[0]) is not pandas._libs.tslibs.nattype.NaTType
+            else prev_tanggal)
+        waktu = row[1]
 
-            # HACK
-            if (None in {tanggal, waktu} or
-                    type(waktu) is float):
+        # HACK
+        if (None in {tanggal, waktu} or
+                type(waktu) is float):
+            continue
+
+        column_num = ord(KOLOM_PRINT_HASIL_START.upper()) - ord('A') + 1
+
+        for method_name, task_id in METHOD_TASK_ID_MAPPING.items():
+            try:
+                copied_filename = get_and_copy_file_to_destination(
+                    tanggal, waktu, task_id=task_id, copy=COPY_FILE)
+            except Exception as e:
+                print(e)
                 continue
-
-            column_num = ord(KOLOM_PRINT_HASIL_START.upper()) - ord('A') + 1
-
-            for method_name, task_id in METHOD_TASK_ID_MAPPING.items():
-                try:
-                    copied_filename = get_and_copy_file_to_destination(
-                        tanggal, waktu, task_id=task_id, copy=COPY_FILE)
-                except Exception as e:
-                    print(e)
-                    continue
-                print('Opening', copied_filename)
-                verify_file_format(copied_filename)
+            print('Opening', copied_filename)
+            verify_file_format(copied_filename)
+            for arg_location in RAIN_TOTAL_LINE_LOCATION.keys():
+                # arg_location is ARG Jerowaru, etc
                 sumber_table_openpyxl_wb[arg_location].cell(row=index + 2, column=column_num).value = get_rain_total_value(copied_filename, arg_location)
-                column_num += 1
+            column_num += 1
 
-            prev_tanggal = tanggal
+        prev_tanggal = tanggal
 
     linecache.clearcache()
     sumber_table_openpyxl_wb.save(NAMA_FILE_HASIL)
