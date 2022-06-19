@@ -111,8 +111,12 @@ if __name__ == "__main__":
             column_num = ord(KOLOM_PRINT_HASIL_START.upper()) - ord('A') + 1
 
             for method_name, task_id in METHOD_TASK_ID_MAPPING.items():
-                copied_filename = get_and_copy_file_to_destination(
-                    tanggal, waktu, task_id=task_id, copy=COPY_FILE)
+                try:
+                    copied_filename = get_and_copy_file_to_destination(
+                        tanggal, waktu, task_id=task_id, copy=COPY_FILE)
+                except Exception as e:
+                    print(e)
+                    continue
                 print('Opening', copied_filename)
                 verify_file_format(copied_filename)
                 sumber_table_openpyxl_wb[arg_location].cell(row=index + 2, column=column_num).value = get_rain_total_value(copied_filename, arg_location)
