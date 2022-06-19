@@ -6,6 +6,11 @@ import shutil
 
 from aws_sort_template_verifier import TEMPLATE_VERIFIER, RAIN_TOTAL_LINE_LOCATION
 
+# Inti scriptnya sama cuma jadi ada 6 kolom
+# Hasil tetep excel
+# Ada 6 ARG di dalam satu file RIH
+# Kolom mulai dari D, ada CMAX, dkk
+
 # KONFIGURASI
 SUMBER_TABLE_PATH = 'C:\\Users\\~phi~\\Desktop\\New folder\\tabel aws fix_29 Juni_update.xlsx'
 SUMBER_DAN_HASIL_TABLE_SHEET_NAME = 'ARG PANGKALAN LAMPAN'
@@ -44,6 +49,7 @@ def get_real_time_and_date(date, time):
         new_time, new_date = None, None
 
     return new_date, new_time
+
 
 def get_and_copy_file_to_destination(date, time, copy=True):
     """
@@ -91,6 +97,7 @@ def get_rain_total_value(filepath):
     rain_values_str = raw_value.strip().split(':')[1].strip().split(',')
     rain_value_sum = sum([float(i) for i in rain_values_str])
     return rain_value_sum
+
 
 if __name__ == "__main__":
     prev_tanggal = None # Tanggal dari iterasi sebelumnya
