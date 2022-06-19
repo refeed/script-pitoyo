@@ -123,7 +123,7 @@ if __name__ == "__main__":
                 column_num += 1
 
             prev_tanggal = tanggal
-            linecache.clearcache()
 
+    linecache.clearcache()
     sumber_table_openpyxl_wb.save(NAMA_FILE_HASIL)
     print('Written %s' % NAMA_FILE_HASIL)
