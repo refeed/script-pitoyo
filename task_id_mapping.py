@@ -1,9 +1,6 @@
-METHOD_TASK_ID_MAPPING = {
-    'CMAX':          '00',
-    'PPI':           '01',
-    'CAPPI':         '02',
-    'SRI_MP':        '03',
-    'SRI_RT':        '04',
-    'SRI_WSR':       '05',
-    'SRI_Sekine':    '06'
-}
+# Sesuaikan urutan dengan yang di kolom spreadsheet
+# Misal task id CMAX adalah 00 dan kolom CMAX di spreadsheet adalah di urutan ketiga
+# METHOD_TASK_ID_TUPLE = ("..", "..", "00", "..")
+#
+
+METHOD_TASK_ID_TUPLE = ("00", "01", "02", "03", "04")
